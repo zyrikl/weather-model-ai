@@ -1,0 +1,4 @@
+# Taken from https://www.weather.gov/media/lwx/climate/dcatemps.pdf. 1872 to 2025.
+
+# Table format below:
+YEAR JAN  FEB  MAR  APR  MAY  JUN  JUL  AUG  SEP  OCT  NOV  DEC  ANN  WNTR SPRG SMMR FALL 1ST  2ND
