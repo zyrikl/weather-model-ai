@@ -61,6 +61,18 @@ double get_stddev(std::vector<double> b_vals) {
     return std::sqrt(sq_sum / (b_vals.size() - 1));
 }
 
+double get_prod_stddev(std::vector<double> x_vals, std::vector<double> y_vals) {
+    double x_mean = get_mean(x_vals);
+    double y_mean = get_mean(y_vals);
+
+    double sq_sum = 0.0;
+    for (int i = 0; i < x_vals.size(); i++) {
+        sq_sum += (x_vals[i] - x_mean) * (y_vals[i] - y_mean);
+    }
+
+    return sq_sum;
+}
+
 double get_variation(std::vector<double> b_vals) {
     double mean = get_mean(b_vals);
 
@@ -69,14 +81,14 @@ double get_variation(std::vector<double> b_vals) {
         sq_sum += (x - mean) * (x - mean);
     }
 
-    return sq_sum / b_vals.size();
+    return sq_sum / (b_vals.size() - 1);
 }
 
 double get_correlation(std::vector<double> x_vals, std::vector<double> y_vals) {
     return (
         (x_vals.size() * get_prod_sums(x_vals, y_vals))
       - (get_sum(x_vals) * get_sum(y_vals))
-    )/std::sqrt(
+    ) / std::sqrt(
         (
             (x_vals.size() * get_square_sums(x_vals))
           - (std::pow(get_sum(x_vals), 2))
@@ -93,8 +105,36 @@ LinearRegression calculate_lsrl(std::vector<double> x_vals, std::vector<double> 
     rval.r = get_correlation(x_vals, y_vals);
     rval.r_sq = std::pow(rval.r, 2);
 
-    rval.b = rval.r * (get_stddev(y_vals)/get_stddev(x_vals));
+    rval.b = rval.r * (get_stddev(y_vals) / get_stddev(x_vals));
     rval.a = get_mean(y_vals) - rval.b * get_mean(x_vals);
+
+    return rval;
+}
+
+LinearRegression calculate_deming(std::vector<double> x_vals, std::vector<double> y_vals) {
+    LinearRegression rval;
+    rval.r = get_correlation(x_vals, y_vals);
+    rval.r_sq = std::pow(rval.r, 2);
+    double lambda = get_variation(y_vals) / get_variation(x_vals);
+
+    double x_mean = get_mean(x_vals);
+    double y_mean = get_mean(y_vals);
+
+    double Sxx = 0.0, Syy = 0.0, Sxy = 0.0;
+    for (int i = 0; i < x_vals.size(); ++i) {
+        double dx = x_vals[i] - x_mean;
+        double dy = y_vals[i] - y_mean;
+        Sxx += dx * dx;
+        Syy += dy * dy;
+        Sxy += dx * dy;
+    }
+
+    double c = Syy - lambda * Sxx;
+    double b1 = (c + std::sqrt(c * c + 4.0 * lambda * Sxy * Sxy)) / (2.0 * Sxy);
+    double b0 = y_mean - b1 * x_mean;
+
+    rval.a = b0;
+    rval.b = b1;
 
     return rval;
 }

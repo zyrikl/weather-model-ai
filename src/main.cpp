@@ -39,9 +39,10 @@ int main() {
         ANNUAL, WNTR, SPRG, SMMR, FALL, FIRST, SECOND
     };
 
-    // Getting annual temps
+    // Getting annual temps using Deming regression
+    // Perhaps there is error in both of the variables
     std::vector<double> test_column = get_column(weather_table, static_cast<int>(Period::ANNUAL));
-    LinearRegression annual = calculate_lsrl(years, test_column);
+    LinearRegression annual = calculate_deming(years, test_column);
     annual.info();
     std::cout << std::to_string(annual.predict(2026)) << std::endl;
 

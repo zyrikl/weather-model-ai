@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++23
+CXXFLAGS = -std=c++17
 
 SRCS = main.cpp predictor.cpp
 OBJS = $(SRCS:.cpp=.o)
