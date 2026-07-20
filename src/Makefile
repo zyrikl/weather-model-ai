@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17
 
-SRCS = main.cpp predictor.cpp
+SRCS = main.cpp table.cpp predictor.cpp parameter.cpp
 OBJS = $(SRCS:.cpp=.o)
 TARGET = weather
 

@@ -14,8 +14,6 @@ class LinearRegression {
         void info();
 };
 
-std::vector<double> get_column(std::vector<std::vector<double>> entry_table, int index);
-
 // Necessary data functions
 double get_sum(std::vector<double> x_vals);
 double get_prod_sums(std::vector<double> x_vals, std::vector<double> y_vals);

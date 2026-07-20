@@ -4,6 +4,7 @@ Weather predictor for Washington, DC based on previous years' data (1872 to 2025
 Run `./weather` after cloning the repo and building (requires C++17):
 ```bash
 git clone "https://github.com/zyrikl/weather-model-ai"
+cd ./src
 make
 ./weather
 ```

@@ -12,16 +12,6 @@ void LinearRegression::info() {
     std::cout << std::string("y^ = ") + std::to_string(a) + std::string(" + (") + std::to_string(b) + std::string(")x\nr = ") + std::to_string(r) + std::string(", R^2 = ") + std::to_string(r_sq * 100) + std::string("%.") << std::endl;
 }
 
-std::vector<double> get_column(std::vector<std::vector<double>> entry_table, int index) {
-    std::vector<double> column;
-
-    for (std::vector<double> row : entry_table) {
-        column.push_back(row[index]);
-    }
-
-    return column;
-}
-
 double get_sum(std::vector<double> x_vals) {
     return std::reduce(x_vals.begin(), x_vals.end());
 }
